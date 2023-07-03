@@ -32,3 +32,35 @@ class PetViewset(ModelViewSet):
         return Response(
             {"message": "Pet adopted successfully."}, status=status.HTTP_200_OK
         )
+
+    @action(detail=True, methods=["post"])
+    def favorite(self, request, pk=None):
+        pet = self.get_object()
+
+        logged_user = request.user
+
+        if pet.donatario.id == logged_user.id:
+            return Response(
+                {"error": "Cannot favorite your own pet."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        logged_user.profile.favorite_pets.add(pet)
+        logged_user.profile.save()
+
+        return Response(
+            {"message": "Pet favorite successfully."}, status=status.HTTP_200_OK
+        )
+
+    @action(detail=True, methods=["post"])
+    def unfavorite(self, request, pk=None):
+        pet = self.get_object()
+
+        logged_user = request.user
+
+        logged_user.profile.favorite_pets.remove(pet)
+        logged_user.profile.save()
+
+        return Response(
+            {"message": "Pet unfavorite successfully."}, status=status.HTTP_200_OK
+        )

@@ -3,6 +3,8 @@ from ..models import Pet
 
 
 class PetSerializer(serializers.ModelSerializer):
+    donatario = serializers.SerializerMethodField()
+
     class Meta:
         model = Pet
         fields = "__all__"

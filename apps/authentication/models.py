@@ -4,6 +4,8 @@ from django.conf import settings
 
 USER_MODEL_STRING = settings.AUTH_USER_MODEL
 
+from apps.adopt.models import Pet
+
 
 class Address(models.Model):
     street = models.CharField(max_length=250)
@@ -21,6 +23,7 @@ class Profile(models.Model):
     address = models.OneToOneField(
         Address, on_delete=models.SET_NULL, blank=True, null=True
     )
+    favorite_pets = models.ManyToManyField(Pet, blank=True)
 
     def __str__(self) -> str:
         return f"Perfil de: {self.user.username}"
