@@ -28,7 +28,11 @@ class Pet(models.Model):
     comprimento = models.IntegerField()
     peso = models.DecimalField(max_digits=5, decimal_places=2)
     donatario = models.ForeignKey(
-        USER_MODEL_STRING, on_delete=models.CASCADE, related_name="donated_pets"
+        USER_MODEL_STRING,
+        on_delete=models.CASCADE,
+        related_name="donated_pets",
+        blank=True,
+        null=True,
     )
     adotante = models.ForeignKey(
         USER_MODEL_STRING,
