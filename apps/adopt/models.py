@@ -31,5 +31,9 @@ class Pet(models.Model):
         USER_MODEL_STRING, on_delete=models.CASCADE, related_name="donated_pets"
     )
     adotante = models.ForeignKey(
-        USER_MODEL_STRING, on_delete=models.CASCADE, related_name="adopted_pets"
+        USER_MODEL_STRING,
+        on_delete=models.CASCADE,
+        related_name="adopted_pets",
+        blank=True,
+        null=True,
     )
