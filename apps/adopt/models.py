@@ -5,9 +5,6 @@ from django.conf import settings
 USER_MODEL_STRING = settings.AUTH_USER_MODEL
 
 
-# adicionar funcionalidade pra favoritar pets, criar uma classe que sirva pra guardar os pets favoritos (diagramar primeiro pra ver como vai ficar)
-
-
 class Pet(models.Model):
     class Porte(models.TextChoices):
         PEQUENO = "P", "Pequeno"

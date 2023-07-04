@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.gis.db import models as gis_models
 
 from django.conf import settings
 
@@ -8,9 +9,10 @@ from apps.adopt.models import Pet
 
 
 class Address(models.Model):
-    street = models.CharField(max_length=250)
-    city = models.CharField(max_length=250)
-    state = models.CharField(max_length=2)
+    street = gis_models.CharField(max_length=255, blank=True, null=True)
+    city = gis_models.CharField(max_length=255, blank=True, null=True)
+    state = gis_models.CharField(max_length=255, blank=True, null=True)
+    geometry = gis_models.PointField()
 
 
 class Profile(models.Model):
