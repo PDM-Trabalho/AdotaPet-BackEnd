@@ -6,6 +6,9 @@ sudo apt-get install binutils libproj-dev gdal-bin python3 python3-venv python3-
 
 sudo apt install postgis
 
+echo "create database adotapet_backend;" | sudo -u postgres psql
+echo "alter database adotapet_backend owner to postgres;" | sudo -u postgres psql
+
 python3 -m venv env
 
 env/bin/pip install -r requirements.txt
