@@ -20,7 +20,7 @@ class Pet(models.Model):
     porte = models.CharField(max_length=1, choices=Porte.choices, default=Porte.PEQUENO)
     sexo = models.CharField(max_length=1, choices=Sexo.choices)
     idade = models.IntegerField()
-    # foto=
+    foto = models.ImageField(upload_to="pics/%Y/%m/%d", null=True, blank=True)
     altura = models.DecimalField(max_digits=3, decimal_places=2)
     comprimento = models.IntegerField()
     peso = models.DecimalField(max_digits=5, decimal_places=2)

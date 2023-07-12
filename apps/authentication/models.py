@@ -26,6 +26,7 @@ class Profile(models.Model):
         Address, on_delete=models.SET_NULL, blank=True, null=True
     )
     favorite_pets = models.ManyToManyField(Pet, blank=True)
+    picture = models.ImageField(upload_to="pics/%Y/%m/%d", null=True, blank=True)
 
     def __str__(self) -> str:
         return f"Perfil de: {self.user.username}"
