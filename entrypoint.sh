@@ -6,9 +6,9 @@ sudo apt-get install binutils libproj-dev gdal-bin python3 python3-venv python3-
 
 sudo apt install postgis
 
-echo "CREATE USER adotapet_admin WITH PASSWORD 'adotapet';" | sudo -u postgres psql
+echo "DROP DATABASE IF EXISTS adotapet_backend;" | sudo -u postgres psql
 echo "CREATE DATABASE adotapet_backend;" | sudo -u postgres psql
-echo "ALTER DATABASE adotapet_backend OWNER TO adotapet_admin;" | sudo -u postgres psql
+echo "ALTER DATABASE adotapet_backend OWNER TO postgres;" | sudo -u postgres psql
 
 python3 -m venv env
 
