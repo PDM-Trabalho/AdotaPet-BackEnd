@@ -43,3 +43,9 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         Profile.objects.create(user=user)
         return user
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = "__all__"
