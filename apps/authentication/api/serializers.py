@@ -39,5 +39,7 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"error": "passwords didn't match"})
 
         user = super().create(validated_data)
+        user.set_password(password)
+        user.save()
         Profile.objects.create(user=user)
         return user
