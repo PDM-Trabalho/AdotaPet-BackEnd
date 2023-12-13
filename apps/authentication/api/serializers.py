@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 # from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
 from django.contrib.auth import get_user_model
@@ -31,9 +32,9 @@ class ProfileSerializer(serializers.ModelSerializer):
         return AddressSerializer(obj.address).data
 
     def get_favorite_pets(self, obj):
-        from apps.adopt.api.serializers import PetSerializer
+        from apps.adopt.api.serializers import FavoritePetSerializer
 
-        return PetSerializer(obj.favorite_pets, many=True).data
+        return FavoritePetSerializer(obj.favorite_pets, many=True).data
 
     class Meta:
         model = Profile
