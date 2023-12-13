@@ -1,7 +1,10 @@
 from rest_framework import serializers
 from ..models import Pet, Picture
 
-from apps.authentication.api.serializers import UserSerializer
+from apps.authentication.api.serializers import (
+    UserSerializer,
+    NoFavoritePetsUserSerializer,
+)
 
 
 class PictureSerializer(serializers.ModelSerializer):
@@ -20,7 +23,7 @@ class FavoritePetSerializer(serializers.ModelSerializer):
         return True
 
     def get_donatario(self, obj):
-        return UserSerializer(obj.donatario).data
+        return NoFavoritePetsUserSerializer(obj.donatario).data
 
     def get_pictures(self, obj):
         # Get pictures and serialize them
@@ -47,11 +50,6 @@ class PetSerializer(serializers.ModelSerializer):
     is_favorite = serializers.SerializerMethodField()
 
     def get_is_favorite(self, obj):
-        print(
-            self.context["request"]
-            .user.profile.favorite_pets.filter(pk__in=[obj.pk])
-            .exists()
-        )
         return (
             self.context["request"]
             .user.profile.favorite_pets.filter(pk__in=[obj.pk])
