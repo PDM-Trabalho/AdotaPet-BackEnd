@@ -10,15 +10,47 @@ from ..models import Profile, Address
 # na deleção de usuario, tem que levar o profile dele junto
 
 
-class AddressSerializer(GeoFeatureModelSerializer):
+# class AddressSerializer(GeoFeatureModelSerializer):
+#     class Meta:
+#         model = Address
+#         fields = "__all__"
+#         geo_field = "geometry"
+
+
+class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = "__all__"
-        geo_field = "geometry"
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    address = serializers.SerializerMethodField()
+    favorite_pets = serializers.SerializerMethodField()
+
+    def get_address(self, obj):
+        return AddressSerializer(obj.address).data
+
+    def get_favorite_pets(self, obj):
+        from apps.adopt.api.serializers import PetSerializer
+
+        return PetSerializer(obj.favorite_pets, many=True).data
+
+    class Meta:
+        model = Profile
+        fields = "__all__"
 
 
 class UserSerializer(serializers.ModelSerializer):
     password_confirmation = serializers.CharField(write_only=True)
+    profile = serializers.SerializerMethodField()
+
+    def get_profile(self, obj):
+        data = ProfileSerializer(obj.profile).data
+        if self.context.get("request"):
+            data["picture"] = self.context["request"].build_absolute_uri(
+                data["picture"]
+            )
+        return data
 
     class Meta:
         model = get_user_model()
@@ -43,9 +75,3 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         Profile.objects.create(user=user)
         return user
-
-
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = "__all__"

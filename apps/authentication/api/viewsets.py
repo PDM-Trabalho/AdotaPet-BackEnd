@@ -10,6 +10,9 @@ from .serializers import (
     Profile,
 )
 
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
 
 class AddressViewset(ModelViewSet):
     queryset = Address.objects.all()
@@ -24,6 +27,16 @@ class UserViewset(ModelViewSet):
         if self.request.method == "POST":
             return [permissions.AllowAny()]
         return super().get_permissions()
+
+    @action(
+        detail=False,
+        methods=["GET"],
+        serializer_class=UserSerializer,
+    )
+    def me(self, request):
+        user = self.request.user
+        serializer = self.get_serializer(user)
+        return Response(serializer.data)
 
 
 class ProfileViewset(ModelViewSet):

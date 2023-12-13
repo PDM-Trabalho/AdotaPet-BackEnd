@@ -3,13 +3,16 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
 
-from .serializers import PetSerializer
-from ..models import Pet
+from .serializers import PetSerializer, PictureSerializer
+from ..models import Pet, Picture
 
 
 class PetViewset(ModelViewSet):
-    queryset = Pet.objects.all()
+    # queryset = Pet.objects.all()
     serializer_class = PetSerializer
+
+    def get_queryset(self):
+        return Pet.objects.exclude(donatario=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(donatario=self.request.user)
@@ -64,3 +67,8 @@ class PetViewset(ModelViewSet):
         return Response(
             {"message": "Pet unfavorite successfully."}, status=status.HTTP_200_OK
         )
+
+
+class PictureViewset(ModelViewSet):
+    queryset = Picture.objects.all()
+    serializer_class = PictureSerializer

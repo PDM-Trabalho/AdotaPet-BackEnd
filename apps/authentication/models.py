@@ -9,10 +9,14 @@ from apps.adopt.models import Pet
 
 
 class Address(models.Model):
-    street = gis_models.CharField(max_length=255, blank=True, null=True)
-    city = gis_models.CharField(max_length=255, blank=True, null=True)
-    state = gis_models.CharField(max_length=255, blank=True, null=True)
-    geometry = gis_models.PointField()
+    # street = gis_models.CharField(max_length=255, blank=True, null=True)
+    # city = gis_models.CharField(max_length=255, blank=True, null=True)
+    # state = gis_models.CharField(max_length=255, blank=True, null=True)
+    # geometry = gis_models.PointField()
+
+    street = models.CharField(max_length=255, blank=True, null=True)
+    city = models.CharField(max_length=255, blank=True, null=True)
+    state = models.CharField(max_length=255, blank=True, null=True)
 
 
 class Profile(models.Model):

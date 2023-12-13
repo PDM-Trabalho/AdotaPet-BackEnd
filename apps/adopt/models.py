@@ -1,5 +1,4 @@
 from django.db import models
-
 from django.conf import settings
 
 USER_MODEL_STRING = settings.AUTH_USER_MODEL
@@ -16,14 +15,21 @@ class Pet(models.Model):
         FEMEA = "F", "Fêmea"
 
     especie = models.CharField(max_length=50)
+
     raça = models.CharField(max_length=50)
+
     porte = models.CharField(max_length=1, choices=Porte.choices, default=Porte.PEQUENO)
+
     sexo = models.CharField(max_length=1, choices=Sexo.choices)
+
     idade = models.IntegerField()
-    foto = models.ImageField(upload_to="pics/%Y/%m/%d", null=True, blank=True)
+
     altura = models.DecimalField(max_digits=3, decimal_places=2)
+
     comprimento = models.IntegerField()
+
     peso = models.DecimalField(max_digits=5, decimal_places=2)
+
     donatario = models.ForeignKey(
         USER_MODEL_STRING,
         on_delete=models.CASCADE,
@@ -31,6 +37,7 @@ class Pet(models.Model):
         blank=True,
         null=True,
     )
+
     adotante = models.ForeignKey(
         USER_MODEL_STRING,
         on_delete=models.CASCADE,
@@ -38,3 +45,8 @@ class Pet(models.Model):
         blank=True,
         null=True,
     )
+
+
+class Picture(models.Model):
+    image = models.ImageField(upload_to="pics", null=True, blank=True)
+    pet = models.ForeignKey(Pet, on_delete=models.CASCADE, related_name="pictures")
