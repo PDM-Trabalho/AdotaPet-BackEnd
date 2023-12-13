@@ -29,7 +29,8 @@ class ProfileSerializer(serializers.ModelSerializer):
     favorite_pets = serializers.SerializerMethodField()
 
     def get_address(self, obj):
-        return AddressSerializer(obj.address).data
+        if obj.address:
+            return AddressSerializer(obj.address).data
 
     def get_favorite_pets(self, obj):
         from apps.adopt.api.serializers import FavoritePetSerializer
