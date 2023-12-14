@@ -23,6 +23,12 @@ class PetViewset(ModelViewSet):
         queryset = self.request.user.donated_pets.all()
         return Response(self.get_serializer(queryset, many=True).data)
 
+    @action(detail=False, methods=["get"])
+    def adopted(self, request):
+        logged_user = self.request.user
+        queryset = self.request.user.adopted_pets.all()
+        return Response(self.get_serializer(queryset, many=True).data)
+
     @action(detail=True, methods=["post"])
     def adopt(self, request, pk=None):
         pet = self.get_object()
