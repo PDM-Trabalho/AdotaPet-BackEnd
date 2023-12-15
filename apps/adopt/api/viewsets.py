@@ -12,9 +12,11 @@ class PetViewset(ModelViewSet):
     serializer_class = PetSerializer
 
     def get_queryset(self):
-        return Pet.objects.exclude(donatario=self.request.user).exclude(
-            adotante__isnull=False
-        )
+        if self.request.method == "GET":
+            return Pet.objects.exclude(donatario=self.request.user).exclude(
+                adotante__isnull=False
+            )
+        return Pet.objects.exclude(adotante__isnull=False)
 
     def perform_create(self, serializer):
         serializer.save(donatario=self.request.user)
