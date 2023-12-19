@@ -24,7 +24,7 @@ class Pet(models.Model):
 
     idade = models.IntegerField()
 
-    altura = models.DecimalField(max_digits=3, decimal_places=2)
+    altura = models.IntegerField()
 
     comprimento = models.IntegerField()
 
